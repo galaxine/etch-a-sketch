@@ -1,2 +1,7 @@
 # etch-a-sketch
-etch-a-sketch is going to be my way of trying to be 
+
+
+## What is this?
+Another project where I am attempting to apply what I learned into a project for my portfolio.
+The underlying theme here is DOM-Manipulation
+
