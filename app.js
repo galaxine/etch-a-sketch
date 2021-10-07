@@ -1,17 +1,34 @@
-// create the body
-const body = document.querySelector("body");
-//---------------------------- buttons and possibly reset function ----------
-const button = document.createElement("button");
-button.textContent = "Clear the screen?";
-button.setAttribute("style", `
-  padding: = 0 15px;
-  `);
-body.appendChild(button);
 //fist of all, declare the 2d-array we are using to "visually" show the change later
 //nothing to do with the browser, arrays and nodelists are different
 let size = 3;
 let divContainer = [];
 let containerSize = 400;
+let rgb = false;
+const body = document.querySelector("body");
+// we need
+//---------------------------- buttons and possibly reset function ----------
+//reset/setPixels
+const button = document.createElement("button");
+button.textContent = "Clear the screen?";
+button.setAttribute("style", `
+  padding: 0 15px;
+  `);
+button.addEventListener("click", resetCanvas);
+function resetCanvas() {
+    let children = container.getElementsByClassName("boxes");
+    for (let child of children) {
+        child.setAttribute("style", "background: black;");
+    }
+    setPixelAmount();
+}
+//rgbOption
+let rgbButton = document.createElement("button");
+rgbButton.textContent = "Do you want RGB with that?";
+rgbButton.setAttribute("style", `
+  padding: 0 15px;
+  `);
+rgbButton.addEventListener("click", toggleRGB);
+body.append(button, rgbButton);
 // create a container div after getting the body
 const container = document.createElement("div");
 container.className = "div-container";
@@ -24,10 +41,7 @@ function makeBoxes() {
         let divContainer2 = [];
         for (let j = 0; j < size; j++) {
             const divNode = document.createElement("div");
-            divNode.className = "boxes";
-            divNode.setAttribute("style", `
-      background-color: black;
-      `);
+            divNode.classList.add("boxes");
             container.appendChild(divNode);
             divContainer2.push(divNode);
         }
@@ -39,18 +53,11 @@ makeBoxes();
 //if a mouse goes over it, then they change colors
 container.onmousemove = function (event) {
     let box = event.target;
-    if (box.className === "boxes") {
-        box.setAttribute("style", "background-color:white;");
+    //change to the class the.thing if the
+    if (box.className == "boxes" && !rgb) {
+        box.classList.replace("boxes", "the-thing");
     }
 };
-button.addEventListener("click", resetCanvas);
-function resetCanvas() {
-    let children = container.getElementsByClassName("boxes");
-    for (let child of children) {
-        child.setAttribute("style", "background: black;");
-    }
-    setPixelAmount();
-}
 function setBoxContainer() {
     container.setAttribute("style", `
     display: grid;
@@ -74,5 +81,13 @@ function setPixelAmount() {
     }
     else {
         alert("You entered an invalid number");
+    }
+}
+function toggleRGB() {
+    if (rgb) {
+        rgb = false;
+    }
+    else {
+        rgb = true;
     }
 }

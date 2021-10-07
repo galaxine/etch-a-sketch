@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
-.the-thing {
+.boxes {
     background-color: white;
+}
+
+.the-thing {
+    background-color: black;
 }
