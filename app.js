@@ -57,6 +57,22 @@ container.onmousemove = function (event) {
     if (box.className == "boxes" && !rgb) {
         box.classList.replace("boxes", "the-thing");
     }
+    else if (box.className == "boxes" && rgb) {
+        // then replace the boxes with the thing-rgb
+        box.classList.replace("boxes", "the-thing-rgb");
+        let red = Math.ceil(Math.random() * 255);
+        let green = Math.ceil(Math.random() * 255);
+        let blue = Math.ceil(Math.random() * 255);
+        box.setAttribute("style", `
+      background-color: rgb(${red},${green},${blue});
+      `);
+    }
+    else if (box.className == "the-thing-rgb" && rgb) {
+        console.log(box.style.backgroundColor);
+    }
+    else {
+        console.log("Something is wrong, please debig the container Eventhandler thing");
+    }
 };
 function setBoxContainer() {
     container.setAttribute("style", `
