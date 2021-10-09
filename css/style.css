@@ -43,19 +43,19 @@ body {
 }
 
 button {
-    background-color: antiquewhite;
+    background-color: burlywood;
     border-radius: 12px;
-}
-
-button: {
-    background-color: aqua;
+    height: 5%;
+    box-shadow: 1px 5px 3px gold;
 }
 
 .button-1 {
-    margin: 0 50px;
+    width: 63%;
 }
 
-.button-2: {}
+.slider {
+    background-color: black;
+}
 
 .canvas {
     display: flex;
