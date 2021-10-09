@@ -4,6 +4,77 @@
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: antiquewhite;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    padding: 25px 0;
+}
+
+.content {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    padding-top: 25px;
+}
+
+.options {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-div {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    background-color: antiquewhite;
+    border-radius: 12px;
+}
+
+button: {
+    background-color: aqua;
+}
+
+.button-1 {
+    margin: 0 50px;
+}
+
+.button-2: {}
+
+.canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 auto;
+}
+
+.div-container {
+    box-shadow: 4px 3px 8px 1px #051428;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+}
+
 .boxes {
     background-color: white;
 }

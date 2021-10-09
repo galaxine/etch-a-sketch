@@ -1,14 +1,17 @@
 //fist of all, declare the 2d-array we are using to "visually" show the change later
 //nothing to do with the browser, arrays and nodelists are different
-let size = 3;
+let size = 1;
 let divContainer = [];
 let containerSize = 400;
 let rgb = false;
-const body = document.querySelector("body");
+// we are going to first divide the buttons and the canvas into the options and canvas
+const canvas = document.querySelector(".canvas");
+const options = document.querySelector(".options");
 // we need
 //---------------------------- buttons and possibly reset function ----------
 //reset/setPixels
 const button = document.createElement("button");
+button.classList.add("button-1");
 button.textContent = "Clear the screen?";
 button.setAttribute("style", `
   padding: 0 15px;
@@ -22,19 +25,50 @@ function resetCanvas() {
     setPixelAmount();
 }
 //rgbOption
-let rgbButton = document.createElement("button");
+const rgbButton = document.createElement("button");
 rgbButton.textContent = "Do you want RGB with that?";
 rgbButton.setAttribute("style", `
   padding: 0 15px;
   `);
 rgbButton.addEventListener("click", toggleRGB);
-body.append(button, rgbButton);
+//create a new slider to add to the document, which is put inside a div
+const sliderDiv = document.createElement("div");
+sliderDiv.classList.add("slider-div");
+const label = document.createElement("label");
+label.textContent = `canvas set to: ${size} x ${size}`;
+const slider = document.createElement("input");
+slider.setAttribute("type", "range");
+slider.setAttribute("value", `${size}`);
+slider.setAttribute("min", "1");
+slider.setAttribute("max", "64");
+sliderDiv.append(label, slider);
+// this goes to the options
+options.append(button, rgbButton, sliderDiv);
+// this should replace `setPixelAmount`
+slider.addEventListener("mousemove", changeSize);
+slider.addEventListener("change", setCanvas);
+function setCanvas(event) {
+    let num = event.target;
+    size = Number(num.value);
+    while (container.hasChildNodes()) {
+        container.removeChild(container.firstChild);
+    }
+    // REALLY???? Apparently yes, because when you are actually setting the parent container up, it's **SET**.
+    // so you have to re-SET it again. Maybe we can turn it into a function to
+    setBoxContainer();
+    makeBoxes();
+}
+function changeSize(event) {
+    let num = event.target;
+    label.textContent = `canvas set to: ${num.value} x ${num.value}`;
+}
 // create a container div after getting the body
 const container = document.createElement("div");
 container.className = "div-container";
 setBoxContainer();
-if (body !== null) {
-    body.appendChild(container);
+//this goesto the container
+if (canvas !== null) {
+    canvas.appendChild(container);
 }
 function makeBoxes() {
     for (let i = 0; i < size; i++) {
@@ -115,50 +149,6 @@ function setClassToRGB(boxes) {
     background-color: rgb(${red},${green},${blue});
     `);
 }
-/*= function (event: PointerEvent) {
-  let box = event.target as HTMLSelectElement;
-  if (box.className == "boxes" && !rgb) {
-    //change to the class the-thing if rgb is turned off and , turn white to black
-    box.classList.replace("boxes", "the-thing");
-  } else if (box.className == "boxes" && rgb) {
-    //chane classNames into the-thing-rgb if the rgb is enabled
-    // then replace the boxes with the thing-rgb
-    box.classList.replace("boxes", "the-thing-rgb");
-    let red = Math.ceil(Math.random() * 255);
-    let green = Math.ceil(Math.random() * 255);
-    let blue = Math.ceil(Math.random() * 255);
-    box.setAttribute(
-      "style",
-      `
-      background-color: rgb(${red},${green},${blue});
-      `
-    );
-  } else if (box.className == "the-thing-rgb" && rgb) {
-    // if the className is the-thing-rgb and rgb is enabled,
-    //then we need to take the color of the background-Color and raise the rgb values by 10%
-
-    // oh man, at first look, I thought of this
-    // background-color: rgb((content)) => (content) => split by ',' => return red green and blue
-    let rgbNumbers = Number(
-      box.style.backgroundColor
-        .slice(4, box.style.backgroundColor.length - 1)
-        .split(",")
-    );
-    box.setAttribute(
-      "style",
-      `
-      background-color: rgb(${Math.ceil(rgbNumbers[0] * 1.1)},${Math.ceil(
-        rgbNumbers[1] * 1.1
-      )},${Math.ceil(rgbNumbers[2] * 1.1)}
-      );
-      `
-    );
-  } else {
-    console.log(
-      "Something is wrong, please debug the container Eventhandler thing"
-    );
-  }
-};*/
 function setBoxContainer() {
     container.setAttribute("style", `
     display: grid;
@@ -169,20 +159,13 @@ function setBoxContainer() {
     `);
 }
 function setPixelAmount() {
-    let pixels = Number(prompt("Choose a size between 1 and 64"));
-    if (pixels > 0 && pixels <= 64) {
-        size = pixels;
-        while (container.hasChildNodes()) {
-            container.removeChild(container.firstChild);
-        }
-        // REALLY???? Apparently yes, because when you are actually setting the parent container up, it's **SET**.
-        // so you have to re-SET it again. Maybe we can turn it into a function to
-        setBoxContainer();
-        makeBoxes();
+    while (container.hasChildNodes()) {
+        container.removeChild(container.firstChild);
     }
-    else {
-        alert("You entered an invalid number");
-    }
+    // REALLY???? Apparently yes, because when you are actually setting the parent container up, it's **SET**.
+    // so you have to re-SET it again. Maybe we can turn it into a function to
+    setBoxContainer();
+    makeBoxes();
 }
 function toggleRGB() {
     if (rgb) {
